@@ -1,17 +1,19 @@
-const express = require('express');
+/*const express = require('express');
 const router = express.Router();
-const userData= require('./userModel');
+const userData = require('./userModel');
+ 
+console.log('Router reached');
 
-// Example route to get all items
-router.get('/items', async (req, res) => {
+// POST route to save user data
+router.post('/items', async (req, res) => {
   try {
-    const items = await userData.find();
-    res.json(items);
+    const newItem = new userData(req.body);
+    const savedItem = await newItem.save();
+    res.json(savedItem);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
-// Other routes for creating, updating, and deleting items
-
 module.exports = router;
+*/
