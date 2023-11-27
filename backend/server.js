@@ -6,6 +6,8 @@ const mongoose = require('mongoose');
 const MONGO_URL="mongodb+srv://Siddhi_jain:Siddhijain18%40@cluster0.p9m2d3r.mongodb.net/sample_mflix?retryWrites=true&w=majority"
 const userData= require('./userDetails/userModel');
 const bodyparser = require("body-parser");
+const Booking = require('./bookingNow/bookingNowModel');
+
 
 const connectdb = function() {
   mongoose.set("strictQuery", false);
@@ -32,7 +34,7 @@ app.use(bodyparser.urlencoded({ extended: true }));
   app.use(bodyparser.json());
   app.use(cors());
 
-
+// api for contact page 
 app.post("/api/items", async (req, res) => {
   console.log('req.body', req.body)
   try {
@@ -46,6 +48,21 @@ app.post("/api/items", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 })
+
+// Booking API
+app.post("/api/booking", async (req, res) => {
+  console.log('req.body', req.body)
+  try {
+    const newBooking = new Booking({
+      destination: req.body.destination,
+      date: req.body.date
+    });
+    const savedBooking = await newBooking.save();
+    res.json(savedBooking);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 //establish http server:
 const PORT = 3000;
